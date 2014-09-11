@@ -120,9 +120,18 @@ app.controller("GraphController", function($scope, $http, $window) {
     });
   };
 
-  $scope.getImgSrc = function(graphCount) {
-    var width = $window.innerWidth;
-    var height = ($window.innerHeight-96)/graphCount;
+  $scope.getImgSrc = function(el, graphCount) {
+    // angular.element('.my-preknown-context .element-to-find')
+//    var width = $window.innerWidth;
+//    var height = ($window.innerHeight)/graphCount;
+
+    var width = $("#thecontainer").width();
+    var height = $("#thecontainer").height()/graphCount;
+
+//  var width = el[0].offsetWidth;
+//  var height = el[0].offsetHeight;
+
+  console.log("hey:"+width+height);
 
     var src = "rrd?w="+width+"&h="+height;
     

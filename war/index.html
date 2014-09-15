@@ -1,60 +1,47 @@
 <!DOCTYPE html>
 <html ng-app="rrdbrowser">
 <head>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
-    <style>
-    body {
-     font-family: 'Ubuntu', sans-serif;
-    }
-    </style>
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+<link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+<style>
+body {
+	font-family: 'Ubuntu', sans-serif;
+}
+</style>
 </head>
-    <body ng-controller="MyController">
-
-<div layout="vertical" layout-fill>
-
+<body>
+ <div layout="vertical" layout-fill>
   <material-toolbar class="material-theme-dark">
-    <div class="material-toolbar-tools">
-      <span class="material-flex">Toolbar: dark-theme</span>
-    </div>
+  <div class="material-toolbar-tools">
+   <span class="material-flex">Toolbar: dark-theme</span>
+  </div>
   </material-toolbar>
-
   <div layout="horizontal" layout-padding>
-   <div flex><material-button flex class="material-button-raised material-button-colored"" ng-click="openDialog($event)">Open</material-button></div>
-   <div flex><material-button flex class="material-button-raised material-button-colored">Servers</material-button></div>
-   <div flex><material-button flex class="material-button-raised material-button-colored">Accounts</material-button></div>
+   <material-button flex class="material-button-raised material-button-colored" " ng-click="openDialog($event)">Open</material-button>
+   <material-button flex class="material-button-raised material-button-colored">Servers</material-button>
+   <material-button flex class="material-button-raised material-button-colored">Accounts</material-button>
   </div>
-
   <div flex layout="vertical">
-
-    <div layout="horizontal">
-     <button class="btn btn-success" ng-click="addGraph()">New Graph</button>
-     <button class="btn btn-success" ng-click="addGraph()">New Graph</button>
-     <button class="btn btn-success" ng-click="addGraph()">New Graph</button>
-    </div>
-
- <div flex id="thecontainer" layout="vertical">
-    <div layout="vertical" ng-controller="GraphController" ng-repeat="graph in graphList">
-     <form class="form-inline">
-      <select class="form-control" ng-model="selectedHost" ng-options="h for h in allHosts"></select>
-      <select class="form-control" ng-model="selectedPlugin" ng-options="p for p in allPlugins"></select>
-      <select class="form-control" ng-model="selectedPluginInstance" ng-options="pi for pi in allPluginInstances"></select>
-      <select class="form-control" ng-model="selectedType" ng-options="t for t in allTypes"></select>
-      <select class="form-control" ng-model="selectedTypeInstance" ng-options="ti for ti in allTypeInstances"></select>
-     </form>
-     <img flex ng-src="{{getImgSrc(this, graphList.length)}}"></img>
-    </div>
- </div>
-
+   <div layout="horizontal">
+    <button class="btn btn-success" ng-click="addGraph()">New Graph</button>
+   </div>
+   
+   <div layout="vertical" flex ng-controller="rrdcontroller">
+    <form class="form-inline">
+     <select class="form-control" ng-model="selectedHost" ng-options="h for h in allHosts"></select>
+     <select class="form-control" ng-model="selectedPlugin" ng-options="p for p in allPlugins"></select>
+     <select class="form-control" ng-model="selectedPluginInstance" ng-options="pi for pi in allPluginInstances"></select>
+     <select class="form-control" ng-model="selectedType" ng-options="t for t in allTypes"></select>
+     <select class="form-control" ng-model="selectedTypeInstance" ng-options="ti for ti in allTypeInstances"></select>
+    </form>
+    <img flex rrdgraph></img>
+   </div>
   </div>
-
-</div>
-
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-material/angular-material.js"></script>
-    <script src="rrdbrowser.js"></script>
-
+ </div>
+ <script src="bower_components/jquery/dist/jquery.js"></script>
+ <script src="bower_components/angular/angular.js"></script>
+ <script src="bower_components/angular-animate/angular-animate.js"></script>
+ <script src="bower_components/angular-material/angular-material.js"></script>
+ <script src="rrdbrowser.js"></script>
 </body>
 </html>

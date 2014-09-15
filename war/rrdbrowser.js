@@ -21,23 +21,7 @@ app.factory("stateService", function($http, $timeout) {
 
 });
 
-app.controller("MyController", function($scope, $http, $window) {
-  $scope.graphList = [{}];
-  $scope.addGraph = function() {
-    $scope.graphList.push({});
-  }
-  $scope.getTheWidth = function() {
-    return $window.innerWidth+"px";
-  }
-  $scope.getTheHeight = function() {
-    var height = ($window.innerHeight-96)/$scope.graphList.length;
-    return height+"px";
-  }
-  
-});
-
-app.controller("GraphController", function($scope, $http, $window) {
-
+app.controller("rrdcontroller", function($scope, $http){
   $scope.$watch("selectedHost", function(newValue) {
     if (newValue) {
       $scope.refreshPlugins();
@@ -120,34 +104,46 @@ app.controller("GraphController", function($scope, $http, $window) {
     });
   };
 
-  $scope.getImgSrc = function(el, graphCount) {
-    // angular.element('.my-preknown-context .element-to-find')
-//    var width = $window.innerWidth;
-//    var height = ($window.innerHeight)/graphCount;
-
-    var width = $("#thecontainer").width();
-    var height = $("#thecontainer").height()/graphCount;
-
-//  var width = el[0].offsetWidth;
-//  var height = el[0].offsetHeight;
-
-  console.log("hey:"+width+height);
-
-    var src = "rrd?w="+width+"&h="+height;
-    
-    src += "&host="+$scope.selectedHost;
-    
-    src += "&p="+$scope.selectedPlugin;
-    if ($scope.selectedPluginInstance)
-      src += "&pi="+$scope.selectedPluginInstance;
-    if ($scope.selectedType)
-      src += "&t="+$scope.selectedType;
-    if ($scope.selectedTypeInstance)
-      src += "&ti="+$scope.selectedTypeInstance;
-    
-    return src;
-  };
-
   $scope.refreshHosts();
-  
+});
+
+app.directive("rrdgraph", function(){
+  return {
+    restrict: "A",
+    link: function($scope, el, attr) {
+      var refreshImgSrc = function($scope, img, attr){
+        
+        console.log("refreshImgSrc");
+
+        console.log(img);
+
+        var width = img.width();
+        var height = img.height();
+
+        console.log(width);
+        console.log(height);
+
+        console.log("hey:"+width+"x"+height);
+
+        var src = "rrd?w="+width+"&h="+height;
+        
+        src += "&host="+$scope.selectedHost;
+        
+        src += "&p="+$scope.selectedPlugin;
+        if ($scope.selectedPluginInstance)
+          src += "&pi="+$scope.selectedPluginInstance;
+        if ($scope.selectedType)
+          src += "&t="+$scope.selectedType;
+        if ($scope.selectedTypeInstance)
+          src += "&ti="+$scope.selectedTypeInstance;
+
+        console.log(src);
+        img.attr("src", src);
+
+      };
+      $scope.$watch("selectedTypeInstance", function(){
+        refreshImgSrc($scope, el, attr);
+      });
+    }
+  }
 });
